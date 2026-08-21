@@ -1,0 +1,18 @@
+[
+    {
+        "key":  "Guid",
+        "type":  0
+    },
+    {
+        "key":  "DisplayName",
+        "type":  0
+    },
+    {
+        "key":  "PrimarySmtpAddress",
+        "type":  0
+    },
+    {
+        "key":  "UserPrincipalName",
+        "type":  0
+    }
+]
