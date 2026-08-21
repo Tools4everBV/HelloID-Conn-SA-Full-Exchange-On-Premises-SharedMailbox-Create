@@ -1,11 +1,11 @@
 [
     {
-        "label":  "Details",
+        "label":  "Create mailbox",
         "fields":  [
                        {
-                           "key":  "commonname",
+                           "key":  "displayname",
                            "templateOptions":  {
-                                                   "label":  "Shared Mailbox Name",
+                                                   "label":  "Displayname",
                                                    "placeholder":  "Gedeelde Mailboxnaam",
                                                    "required":  true,
                                                    "minLength":  2
@@ -13,73 +13,307 @@
                            "type":  "input",
                            "summaryVisibility":  "Show",
                            "requiresTemplateOptions":  true,
-                           "requiresKey":  true
-                       }
-                   ]
-    },
-    {
-        "label":  "Naming",
-        "fields":  [
+                           "requiresKey":  true,
+                           "requiresDataSource":  false
+                       },
                        {
-                           "key":  "naming",
+                           "key":  "nameValidation",
                            "templateOptions":  {
-                                                   "label":  "Naming",
+                                                   "label":  "Display name validation",
+                                                   "readonly":  true,
+                                                   "placeholder":  "Display name will be validated on uniqnueness in Exchange On-Premises",
+                                                   "pattern":  "^Valid.*",
                                                    "required":  true,
-                                                   "grid":  {
-                                                                "columns":  [
-                                                                                {
-                                                                                    "headerName":  "Displayname",
-                                                                                    "field":  "displayname"
-                                                                                },
-                                                                                {
-                                                                                    "headerName":  "Samaccountname",
-                                                                                    "field":  "samaccountname"
-                                                                                },
-                                                                                {
-                                                                                    "headerName":  "Mail",
-                                                                                    "field":  "mail"
-                                                                                },
-                                                                                {
-                                                                                    "headerName":  "User Principal Name",
-                                                                                    "field":  "userPrincipalName"
-                                                                                },
-                                                                                {
-                                                                                    "headerName":  "Common Name",
-                                                                                    "field":  "commonName"
-                                                                                },
-                                                                                {
-                                                                                    "headerName":  "Alias",
-                                                                                    "field":  "alias"
-                                                                                }
-                                                                            ],
-                                                                "height":  300,
-                                                                "rowSelection":  "single"
-                                                            },
+                                                   "useDependOn":  false,
+                                                   "dependOn":  "displayname",
+                                                   "useDataSource":  true,
                                                    "dataSourceConfig":  {
                                                                             "dataSourceGuid":  "$dataSourceGuid_0",
                                                                             "input":  {
                                                                                           "propertyInputs":  [
                                                                                                                  {
-                                                                                                                     "propertyName":  "CommonName",
+                                                                                                                     "propertyName":  "displayName",
                                                                                                                      "otherFieldValue":  {
-                                                                                                                                             "otherFieldKey":  "commonname"
+                                                                                                                                             "otherFieldKey":  "displayname"
                                                                                                                                          }
                                                                                                                  }
                                                                                                              ]
                                                                                       }
                                                                         },
-                                                   "defaultSelectorProperty":  "displayname",
-                                                   "useDefault":  true
+                                                   "displayField":  "output"
                                                },
-                           "validation":  {
-                                              "messages":  {
-                                                               "required":  "Select the row to continue"
-                                                           }
-                                          },
-                           "type":  "grid",
+                           "hideExpression":  "!model[\"displayname\"]",
+                           "type":  "input",
                            "summaryVisibility":  "Show",
                            "requiresTemplateOptions":  true,
-                           "requiresKey":  true
+                           "requiresKey":  true,
+                           "requiresDataSource":  false
+                       },
+                       {
+                           "templateOptions":  {
+                                                   "title":  "This address will be created as the primary SMTP address of the mailbox",
+                                                   "titleField":  "",
+                                                   "bannerType":  "Info",
+                                                   "useBody":  false
+                                               },
+                           "type":  "textbanner",
+                           "summaryVisibility":  "Show",
+                           "body":  "Text Banner Content",
+                           "requiresTemplateOptions":  false,
+                           "requiresKey":  false,
+                           "requiresDataSource":  false
+                       },
+                       {
+                           "key":  "formRow",
+                           "templateOptions":  {
+
+                                               },
+                           "fieldGroup":  [
+                                              {
+                                                  "key":  "mailPrefix",
+                                                  "templateOptions":  {
+                                                                          "label":  "Email address",
+                                                                          "pattern":  "^[A-Za-z0-9]([A-Za-z0-9._-]*[A-Za-z0-9])?$",
+                                                                          "minLength":  1,
+                                                                          "maxLength":  200,
+                                                                          "required":  true
+                                                                      },
+                                                  "type":  "input",
+                                                  "summaryVisibility":  "Show",
+                                                  "requiresTemplateOptions":  true,
+                                                  "requiresKey":  true,
+                                                  "requiresDataSource":  false
+                                              },
+                                              {
+                                                  "key":  "mailDomain",
+                                                  "templateOptions":  {
+                                                                          "label":  "Mail domain",
+                                                                          "required":  true,
+                                                                          "useObjects":  false,
+                                                                          "useDataSource":  true,
+                                                                          "useFilter":  true,
+                                                                          "options":  [
+                                                                                          "@domain.com",
+                                                                                          "@domain2.com",
+                                                                                          "@domain3.com"
+                                                                                      ],
+                                                                          "dataSourceConfig":  {
+                                                                                                   "dataSourceGuid":  "$dataSourceGuid_1",
+                                                                                                   "input":  {
+                                                                                                                 "propertyInputs":  [
+
+                                                                                                                                    ]
+                                                                                                             }
+                                                                                               },
+                                                                          "valueField":  "Id",
+                                                                          "textField":  "Id",
+                                                                          "useDefault":  true,
+                                                                          "defaultSelectorProperty":  "Id"
+                                                                      },
+                                                  "type":  "dropdown",
+                                                  "summaryVisibility":  "Show",
+                                                  "textOrLabel":  "text",
+                                                  "requiresTemplateOptions":  true,
+                                                  "requiresKey":  true,
+                                                  "requiresDataSource":  false
+                                              }
+                                          ],
+                           "type":  "formrow",
+                           "requiresTemplateOptions":  true,
+                           "requiresKey":  true,
+                           "requiresDataSource":  false
+                       },
+                       {
+                           "key":  "mailValidation",
+                           "templateOptions":  {
+                                                   "label":  "Email address validation",
+                                                   "placeholder":  "Email address will be validated on uniqnueness in Exchange On-Premises",
+                                                   "pattern":  "^Valid.*",
+                                                   "required":  true,
+                                                   "readonly":  true,
+                                                   "useDataSource":  true,
+                                                   "dataSourceConfig":  {
+                                                                            "dataSourceGuid":  "$dataSourceGuid_2",
+                                                                            "input":  {
+                                                                                          "propertyInputs":  [
+                                                                                                                 {
+                                                                                                                     "propertyName":  "mailPrefix",
+                                                                                                                     "otherFieldValue":  {
+                                                                                                                                             "otherFieldKey":  "mailPrefix"
+                                                                                                                                         }
+                                                                                                                 },
+                                                                                                                 {
+                                                                                                                     "propertyName":  "mailDomain",
+                                                                                                                     "otherFieldValue":  {
+                                                                                                                                             "otherFieldKey":  "mailDomain"
+                                                                                                                                         }
+                                                                                                                 }
+                                                                                                             ]
+                                                                                      }
+                                                                        },
+                                                   "displayField":  "output"
+                                               },
+                           "hideExpression":  "!model[\"mailPrefix\"]",
+                           "type":  "input",
+                           "summaryVisibility":  "Show",
+                           "requiresTemplateOptions":  true,
+                           "requiresKey":  true,
+                           "requiresDataSource":  false
+                       },
+                       {
+                           "templateOptions":  {
+                                                   "title":  "The alias (mailNickname) is a short name used as an internal identifier for the group",
+                                                   "titleField":  "",
+                                                   "bannerType":  "Info",
+                                                   "useBody":  true
+                                               },
+                           "type":  "textbanner",
+                           "summaryVisibility":  "Hide element",
+                           "body":  "**The alias is a short name used as an internal identifier for the new group.**\r\n\r\nIt is not the same as the email address.  \r\nThe alias can only have **one** value, and it will be created exactly as entered.\r\n\r\nIf you do not provide an alias, the username portion of the email address will be used automatically.\r\n\r\nUse only letters, numbers, and periods (no spaces).  \r\nDo not include a domain (no \"@\").",
+                           "requiresTemplateOptions":  false,
+                           "requiresKey":  false,
+                           "requiresDataSource":  false
+                       },
+                       {
+                           "key":  "alias",
+                           "templateOptions":  {
+                                                   "label":  "Alias",
+                                                   "placeholder":  "it-dep",
+                                                   "pattern":  "^[A-Za-z0-9]([A-Za-z0-9._-]*[A-Za-z0-9])?$"
+                                               },
+                           "type":  "input",
+                           "summaryVisibility":  "Show",
+                           "requiresTemplateOptions":  true,
+                           "requiresKey":  true,
+                           "requiresDataSource":  false
+                       },
+                       {
+                           "key":  "aliasValidation",
+                           "templateOptions":  {
+                                                   "label":  "Alias validation",
+                                                   "placeholder":  "Alias will be validated on uniqnueness in Exchange On-Premises",
+                                                   "pattern":  "^Valid.*",
+                                                   "readonly":  true,
+                                                   "useDataSource":  true,
+                                                   "dataSourceConfig":  {
+                                                                            "dataSourceGuid":  "$dataSourceGuid_3",
+                                                                            "input":  {
+                                                                                          "propertyInputs":  [
+                                                                                                                 {
+                                                                                                                     "propertyName":  "alias",
+                                                                                                                     "otherFieldValue":  {
+                                                                                                                                             "otherFieldKey":  "alias"
+                                                                                                                                         }
+                                                                                                                 },
+                                                                                                                 {
+                                                                                                                     "propertyName":  "mailDomain",
+                                                                                                                     "otherFieldValue":  {
+                                                                                                                                             "otherFieldKey":  "mailDomain"
+                                                                                                                                         }
+                                                                                                                 }
+                                                                                                             ]
+                                                                                      }
+                                                                        },
+                                                   "displayField":  "output"
+                                               },
+                           "hideExpression":  "!model[\"alias\"]",
+                           "type":  "input",
+                           "summaryVisibility":  "Show",
+                           "requiresTemplateOptions":  true,
+                           "requiresKey":  true,
+                           "requiresDataSource":  false
+                       }
+                   ]
+    },
+    {
+        "label":  "Mailbox Permissions",
+        "fields":  [
+                       {
+                           "key":  "permission",
+                           "templateOptions":  {
+                                                   "label":  "Permission",
+                                                   "required":  false,
+                                                   "useObjects":  true,
+                                                   "useDataSource":  false,
+                                                   "useFilter":  false,
+                                                   "options":  [
+                                                                   {
+                                                                       "value":  "fullaccess",
+                                                                       "text":  "Full Access"
+                                                                   },
+                                                                   {
+                                                                       "value":  "sendas",
+                                                                       "text":  "Send As"
+                                                                   },
+                                                                   {
+                                                                       "value":  "sendonbehalf",
+                                                                       "text":  "Send on Behalf"
+                                                                   }
+                                                               ]
+                                               },
+                           "type":  "dropdown",
+                           "summaryVisibility":  "Show",
+                           "textOrLabel":  "text",
+                           "requiresTemplateOptions":  true,
+                           "requiresKey":  true,
+                           "requiresDataSource":  false
+                       },
+                       {
+                           "key":  "blnIncludeSendAs",
+                           "templateOptions":  {
+                                                   "label":  "Include Send As with Full Access?",
+                                                   "useSwitch":  true,
+                                                   "checkboxLabel":  "Include Send As with Full Access"
+                                               },
+                           "hideExpression":  "model[\"permission\"]!==\u0027fullaccess\u0027",
+                           "type":  "boolean",
+                           "defaultValue":  true,
+                           "summaryVisibility":  "Show",
+                           "requiresTemplateOptions":  true,
+                           "requiresKey":  true,
+                           "requiresDataSource":  false
+                       },
+                       {
+                           "key":  "usersToAdd",
+                           "templateOptions":  {
+                                                   "label":  "User(s) to grant permission",
+                                                   "required":  false,
+                                                   "grid":  {
+                                                                "columns":  [
+                                                                                {
+                                                                                    "headerName":  "User Principal Name",
+                                                                                    "field":  "UserPrincipalName"
+                                                                                },
+                                                                                {
+                                                                                    "headerName":  "Display Name",
+                                                                                    "field":  "DisplayName"
+                                                                                },
+                                                                                {
+                                                                                    "headerName":  "Primary Smtp Address",
+                                                                                    "field":  "PrimarySmtpAddress"
+                                                                                }
+                                                                            ],
+                                                                "height":  300,
+                                                                "rowSelection":  "multiple"
+                                                            },
+                                                   "dataSourceConfig":  {
+                                                                            "dataSourceGuid":  "$dataSourceGuid_4",
+                                                                            "input":  {
+                                                                                          "propertyInputs":  [
+
+                                                                                                             ]
+                                                                                      }
+                                                                        },
+                                                   "useFilter":  true,
+                                                   "useDefault":  false,
+                                                   "allowCsvDownload":  false
+                                               },
+                           "hideExpression":  "!model[\"permission\"]",
+                           "type":  "multiselectgrid",
+                           "summaryVisibility":  "Show",
+                           "requiresTemplateOptions":  true,
+                           "requiresKey":  true,
+                           "requiresDataSource":  true
                        }
                    ]
     }
