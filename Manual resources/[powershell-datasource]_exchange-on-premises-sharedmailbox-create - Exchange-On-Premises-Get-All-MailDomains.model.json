@@ -1,0 +1,14 @@
+[
+    {
+        "key":  "Id",
+        "type":  0
+    },
+    {
+        "key":  "IsValid",
+        "type":  0
+    },
+    {
+        "key":  "EmailOnly",
+        "type":  0
+    }
+]

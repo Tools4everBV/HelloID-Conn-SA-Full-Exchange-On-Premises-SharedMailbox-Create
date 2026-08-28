@@ -3,7 +3,7 @@
         "description":  null,
         "translateDescription":  false,
         "inputFieldType":  1,
-        "key":  "CommonName",
+        "key":  "displayName",
         "type":  0,
         "options":  1
     }
