@@ -21,7 +21,7 @@ $tmpName = @'
 ExchangeConnectionUri
 '@ 
 $tmpValue = @'
-http://vm03T4EJBW2K19/powershell
+http://servername/powershell
 '@ 
 $globalHelloIDVariables.Add([PSCustomObject]@{name = $tmpName; value = $tmpValue; secret = "False" });
 
@@ -37,7 +37,7 @@ $tmpName = @'
 ExchangeAdminUsername
 '@ 
 $tmpValue = @'
-t4ejb\svc_helloid
+t4e\svc_helloid
 '@ 
 $globalHelloIDVariables.Add([PSCustomObject]@{name = $tmpName; value = $tmpValue; secret = "False" });
 
@@ -46,7 +46,7 @@ $tmpName = @'
 ADsharedMailboxOU
 '@ 
 $tmpValue = @'
-OU=Shared Mailbox Users,OU=HelloID Mail,DC=T4EJB,DC=local
+OU=Shared Mailbox Users,OU=HelloID Mail,DC=T4E,DC=local
 '@ 
 $globalHelloIDVariables.Add([PSCustomObject]@{name = $tmpName; value = $tmpValue; secret = "False" });
 

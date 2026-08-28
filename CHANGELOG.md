@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file. The format 
 - Enabled TLS 1.2 for secure connections
 - Added selective property selection in datasources to limit memory usage and speed up processing
 - Added option to automatically include Send As permission when granting Full Access
+- Added github workflows
 
 ### Changed
 
