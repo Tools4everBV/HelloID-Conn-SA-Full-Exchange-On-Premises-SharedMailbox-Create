@@ -7,7 +7,7 @@ $mailboxPrimarySmtpAddress = "$($form.mailPrefix)@$($form.mailDomain.id)"
 $mailboxAlias = $form.alias
 
 $permissions = @($form.permission)
-$blnIncludeSendAs = [System.Convert]::ToBoolean($form.blnIncludeSendAs)
+$blnIncludeSendAs = if ([string]::IsNullOrWhiteSpace($form.blnIncludeSendAs)) { $false } else { [System.Convert]::ToBoolean($form.blnIncludeSendAs) }
 if($blnIncludeSendAs -eq $true) {
     $permissions += 'sendas'
 }
